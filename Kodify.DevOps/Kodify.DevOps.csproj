@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 	  <PackageId>Kodify.DevOps</PackageId>
     <Description>A Kodify sub-package including DevOps tools.</Description>
-    <Version>0.1.8-dev-0002</Version>
+    <Version>0.1.8-dev-0004</Version>
     <Authors>mhrstv</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <!--<PackageReadmeFile>README.md</PackageReadmeFile>-->
