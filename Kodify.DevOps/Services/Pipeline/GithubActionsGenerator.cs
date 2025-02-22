@@ -1,25 +1,35 @@
 using Kodify.DevOps.Models;
 using System.Text;
 using System.IO;
+using Kodify.DevOps;
+using Kodify.AutoDoc.Repository;
 namespace Kodify.DevOps.Pipeline
 {
     public class GithubActionsGenerator : IPipelineGenerator
     {
         public string PlatformName => "GitHub Actions";
+        private readonly DevOpsAnalyzer _analyzer;
+        private readonly PipelineInfo _info;
+        private readonly GitRepositoryService _gitService;
+        private readonly string _defaultBranch;
 
-        public bool SupportsProjectType(string projectType) => true;
-        private DevOpsAnalyzer _analyzer;
-        private PipelineInfo _info;
         public GithubActionsGenerator()
         {
             _analyzer = new DevOpsAnalyzer();
+            _gitService = new GitRepositoryService();
             _info = _analyzer.AnalyzeProjectAsync().Result;
+            _defaultBranch = _gitService.GetDefaultBranch() ?? "main";
         }
+
         public GithubActionsGenerator(DevOpsAnalyzer analyzer)
         {
             _analyzer = analyzer;
+            _gitService = new GitRepositoryService();
             _info = _analyzer.AnalyzeProjectAsync().Result;
+            _defaultBranch = _gitService.GetDefaultBranch() ?? "main";
         }
+
+        public bool SupportsProjectType(string projectType) => true;
 
         public async Task GenerateAsync()
         {
@@ -28,9 +38,9 @@ namespace Kodify.DevOps.Pipeline
             yaml.AppendLine();
             yaml.AppendLine("on:");
             yaml.AppendLine("  push:");
-            yaml.AppendLine("    branches: [ main ]");
+            yaml.AppendLine($"    branches: [ {_defaultBranch} ]");
             yaml.AppendLine("  pull_request:");
-            yaml.AppendLine("    branches: [ main ]");
+            yaml.AppendLine($"    branches: [ {_defaultBranch} ]");
             yaml.AppendLine();
             
             yaml.AppendLine("jobs:");
@@ -61,7 +71,7 @@ namespace Kodify.DevOps.Pipeline
                 yaml.AppendLine($"      run: dotnet pack --configuration {_info.BuildConfiguration} --no-build");
                 
                 yaml.AppendLine("    - name: Publish to NuGet");
-                yaml.AppendLine("      if: github.event_name == 'push' && github.ref == 'refs/heads/main'");
+                yaml.AppendLine($"      if: github.event_name == 'push' && github.ref == 'refs/heads/{_defaultBranch}'");
                 yaml.AppendLine("      run: dotnet nuget push \"**/*.nupkg\" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate");
             }
 

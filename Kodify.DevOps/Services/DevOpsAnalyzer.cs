@@ -1,5 +1,5 @@
-using Kodify.AutoDoc.Services;
-using Kodify.AutoDoc.Services.Repository;
+using Kodify.AutoDoc;
+using Kodify.AutoDoc.Repository;
 using Kodify.DevOps.Models;
 using System.Text.RegularExpressions;
 
