@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 	  <PackageId>Kodify.DevOps</PackageId>
     <Description>A Kodify sub-package including DevOps tools.</Description>
-    <Version>0.1.8</Version>
+    <Version>0.1.9</Version>
     <Authors>mhrstv</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <!--<PackageReadmeFile>README.md</PackageReadmeFile>-->
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kodify" Version="0.1.8" />
+    <PackageReference Include="Kodify" Version="0.1.9" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="4.12.0" />
   </ItemGroup>
 
