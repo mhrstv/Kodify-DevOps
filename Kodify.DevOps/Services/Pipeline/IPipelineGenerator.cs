@@ -1,4 +1,3 @@
-using Kodify.DevOps.Models;
 namespace Kodify.DevOps.Pipeline
 {
     public interface IPipelineGenerator

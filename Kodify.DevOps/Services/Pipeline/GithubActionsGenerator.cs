@@ -1,8 +1,6 @@
 using Kodify.DevOps.Models;
 using System.Text;
-using System.IO;
-using Kodify.DevOps;
-using Kodify.AutoDoc.Repository;
+using Kodify.Repository.Services;
 namespace Kodify.DevOps.Pipeline
 {
     public class GithubActionsGenerator : IPipelineGenerator
